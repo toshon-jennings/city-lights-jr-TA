@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>City Lights Junior Tech Academy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts: Roboto & Montserrat -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:600,700&display=swap" rel="stylesheet">
+    <style>
+    body {
+        font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+        color: #181818;
+        background: #fafbfc;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 950px;
+        margin: 0 auto;
+        padding: 32px 16px;
+    }
+    .clja-carousel-section {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 2px 18px rgba(40,81,163,0.09);
+        margin: 48px auto 32px auto;
+        padding: 46px 18px 38px 18px;
+    }
+    .clja-intro h2 {
+        color: #102654;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-weight: 700;
+        font-size: 2.4rem;
+        margin-bottom: 10px;
+        letter-spacing: 0.4px;
+    }
+    .clja-intro p {
+        font-size: 1.18rem;
+        margin-bottom: 22px;
+        font-family: 'Roboto', Arial, sans-serif;
+        font-weight: 400;
+        line-height: 1.72;
+    }
+    .clja-stones-blurb {
+        background: #f9fafb;
+        border-left: 6px solid #2851a3;
+        padding: 22px 30px;
+        border-radius: 14px;
+        margin-bottom: 34px;
+    }
+    .clja-stones-blurb h3 {
+        color: #2851a3;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+    }
+    .clja-stones-blurb ul {
+        margin-left: 1em;
+        padding-left: 0.5em;
+    }
+    .clja-stones-blurb li {
+        margin-bottom: 10px;
+        font-size: 1.07rem;
+        font-family: 'Roboto', Arial, sans-serif;
+        font-weight: 500;
+    }
+    .clja-stones-blurb strong {
+        color: #102654;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-weight: 600;
+    }
+    .clja-carousel-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        margin-top: 10px;
+        position: relative;
+    }
+    .clja-carousel {
+        position: relative;
+        width: 100%;
+        max-width: 820px;
+        min-height: 340px;
+        background: #f3f6fb;
+        border-radius: 20px;
+        box-shadow: 0 2px 12px rgba(40,81,163,0.06);
+        overflow: hidden;
+        padding: 32px 24px 24px 24px;
+        transition: box-shadow 0.22s;
+    }
+    .carousel-slide {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        animation: fadeIn 0.6s;
+    }
+    .carousel-slide.active {
+        display: flex;
+    }
+    .carousel-slide h4 {
+        font-size: 1.4rem;
+        color: #2851a3;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-weight: 600;
+        margin-bottom: 18px;
+        letter-spacing: 0.4px;
+    }
+    .clja-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: #fff;
+        border-radius: 14px;
+        overflow: hidden;
+        margin-bottom: 0;
+        box-shadow: 0 1px 10px rgba(40,81,163,0.07);
+        font-size: 1.05rem;
+    }
+    .clja-table th,
+    .clja-table td {
+        padding: 12px 10px;
+        text-align: left;
+    }
+    .clja-table th {
+        background: #2851a3;
+        color: #fff;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        font-size: 1.02rem;
+        border-bottom: 2px solid #ffb700;
+    }
+    .clja-table td {
+        font-family: 'Roboto', Arial, sans-serif;
+        font-size: 1.01rem;
+        font-weight: 500;
+        border-bottom: 1px solid #e6e6e6;
+        background: #fff;
+        transition: background 0.18s;
+    }
+    .clja-table tr:hover td {
+        background: #f9f5ee;
+    }
+    .clja-table tr:last-child td {
+        border-bottom: none;
+    }
+    .clja-table td:nth-child(2),
+    .clja-table th:nth-child(2) {
+        font-weight: 700;
+        color: #2851a3;
+        font-family: 'Montserrat', Arial, sans-serif;
+        letter-spacing: 0.15px;
+    }
+    .clja-table td:nth-child(3) {
+        font-weight: 600;
+        color: #ffb700;
+    }
+    .carousel-btn {
+        background: #ffb700;
+        border: none;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        color: #102654;
+        font-size: 1.55rem;
+        font-weight: 700;
+        cursor: pointer;
+        margin: 0 18px;
+        box-shadow: 0 2px 8px rgba(255,183,0,0.09);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.16s, color 0.16s, transform 0.13s;
+        outline: none;
+    }
+    .carousel-btn:focus, .carousel-btn:hover {
+        background: #2851a3;
+        color: #fff;
+        transform: scale(1.1);
+    }
+    @media (max-width: 900px) {
+        .clja-carousel-section {
+            padding: 20px 3vw;
+        }
+        .clja-carousel {
+            padding: 18px 2vw 18px 2vw;
+            min-height: 260px;
+        }
+        .clja-table th, .clja-table td {
+            font-size: 0.98rem;
+            padding: 8px 5px;
+        }
+    }
+    @media (max-width: 700px) {
+        .container {
+            padding: 16px 5vw;
+        }
+        .clja-carousel-section {
+            padding: 8px 0;
+        }
+        .clja-intro h2 {
+            font-size: 1.2rem;
+        }
+        .clja-carousel {
+            padding: 8px 2vw 8px 2vw;
+            min-height: 130px;
+        }
+        .carousel-btn {
+            width: 32px;
+            height: 32px;
+            font-size: 1.08rem;
+            margin: 0 6px;
+        }
+        .clja-table th, .clja-table td {
+            font-size: 0.92rem;
+            padding: 6px 2px;
+        }
+        .carousel-slide h4 {
+            font-size: 1rem;
+        }
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px);}
+        to { opacity: 1; transform: none;}
+    }
+    .contact-admin {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 1px 10px rgba(16,38,84,0.09);
+        margin: 52px 0 32px 0;
+        padding: 36px 0 28px 0;
+    }
+    .contact-admin h2 {
+        color: #2851a3;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-weight: 700;
+        margin-bottom: 12px;
+        font-size: 1.4rem;
+        letter-spacing: 0.1px;
+    }
+    .contact-hint {
+        margin-bottom: 22px;
+        font-size: 1.05rem;
+        color: #888;
+        max-width: 530px;
+    }
+    .admin-contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        max-width: 440px;
+        margin-left: 0;
+    }
+    .admin-contact-form label {
+        font-weight: 600;
+        color: #102654;
+        margin-top: 6px;
+        margin-bottom: 2px;
+        font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .admin-contact-form input,
+    .admin-contact-form textarea {
+        padding: 11px 12px;
+        border: 1px solid #bbb;
+        border-radius: 7px;
+        font-size: 1.05rem;
+        font-family: 'Roboto', Arial, sans-serif;
+        margin-bottom: 6px;
+        background: #f7f8fa;
+        transition: border 0.18s;
+    }
+    .admin-contact-form input:focus,
+    .admin-contact-form textarea:focus {
+        border-color: #2851a3;
+        outline: none;
+    }
+    .admin-contact-form textarea {
+        min-height: 112px;
+        resize: vertical;
+    }
+    .form-note {
+        margin-top: 16px;
+        text-align: left;
+        color: #888;
+        font-size: 0.99rem;
+        padding-left: 2px;
+    }
+    .cta-btn {
+        display: inline-block;
+        background: #ffb700;
+        color: #1c2130;
+        font-size: 1.09rem;
+        font-weight: 600;
+        padding: 12px 28px;
+        border-radius: 32px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: background 0.22s, color 0.22s;
+        box-shadow: 0 2px 12px rgba(40,81,163,0.06);
+        margin-top: 10px;
+        margin-bottom: 4px;
+    }
+    .cta-btn:hover, .cta-btn:focus {
+        background: #ffa600;
+        color: #102654;
+    }
+    @media (max-width: 700px) {
+        .admin-contact-form {
+            max-width: 100%;
+        }
+        .contact-admin {
+            margin: 28px 0 18px 0;
+            padding: 18px 0 16px 0;
+        }
+    }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- CAROUSEL + OVERVIEW SECTION -->
+    <section class="clja-carousel-section">
+        <div class="clja-intro">
+            <h2>City Lights Junior Tech Academy</h2>
+            <p>
+                <strong>City Lights Junior Tech Academy</strong> empowers grades 3–5 with real-world digital skills, a security-first mindset, and a Biblical worldview. 
+              <p>Students grow from digital novices into tech creators and cyber-citizens, through hands-on coding, website building, and cybersecurity projects—all on Chromebook-friendly platforms.</p>
+               <p>At every step, we're integrating our "5 Smooth Stones”, helping every student develop habits of <strong>Consistency</strong>, <strong>Order</strong>, <strong>Vision</strong>, <strong>Work</strong>, and <strong>Excellence</strong> as they learn to shine online.</p>
+            </p>
+          <hr>
+            <div class="clja-stones-blurb">
+                <h3>Guiding Principles: Our 5 Smooth Stones</h3>
+                <p><code><small>Then David took his staff in his hand; and he chose for himself five smooth stones from the brook, and put them in a shepherd’s bag, in a pouch which he had, and his sling was in his hand. And he drew near to Goliath. <em>-1 Samuel 17:40</small></em></code>
+                <ul>
+                    <li><strong>Consistency:</strong> Safe and wise habits—practiced daily, in tech and life.</li>
+                    <li><strong>Order:</strong> Working with clarity, organization, and care.</li>
+                    <li><strong>Vision:</strong> Dreaming big, planning ahead, and seeing possibilities.</li>
+                    <li><strong>Work:</strong> Diligence, persistence, and teamwork in every project.</li>
+                    <li><strong>Excellence:</strong> Always offering our best, to God and others.</li>
+                </ul>
+            </div>
+           <hr>
+        </div>
+     
+        <div class="clja-carousel-wrapper">
+            <button class="carousel-btn prev" aria-label="Previous">&#8592;</button>
+            <div class="clja-carousel">
+                <!-- 3rd Grade Slide -->
+                <div class="carousel-slide active">
+                    <h4>3rd Grade: Year-at-a-Glance</h4>
+                    <table class="clja-table">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>Stone</th>
+                                <th>Project/Unit</th>
+                                <th>Skills & Focus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Sep</td><td>Consistency</td><td>Getting Started with Tech</td><td>Login, Chromebook use, Docs/Slides, Passwords, Safe logins</td></tr>
+                            <tr><td>Oct</td><td>Order</td><td>Organize My Digital World</td><td>Creating/saving docs, folders, file names, Order online</td></tr>
+                            <tr><td>Nov</td><td>Vision</td><td>Dream a Digital Poster</td><td>Google Drawings, Graphics, Safe image use</td></tr>
+                            <tr><td>Dec</td><td>Work</td><td>Team Storybook in Docs</td><td>Typing, Teamwork, Formatting, Sharing</td></tr>
+                            <tr><td>Jan</td><td>Excellence</td><td>Present My Project (Slides)</td><td>Presentation, Speaking, Do your best</td></tr>
+                            <tr><td>Feb</td><td>Consistency</td><td>My Cyber Safety Checklist</td><td>Daily safe habits, Browsing checklists</td></tr>
+                            <tr><td>Mar</td><td>Order</td><td>My First Website (Google Sites)</td><td>Make/edit pages, Images, Safe sharing</td></tr>
+                            <tr><td>Apr</td><td>Vision</td><td>Invent an App Pitch</td><td>Planning, Research, Simple presentation</td></tr>
+                            <tr><td>May</td><td>Work</td><td>Cyber Detectives Game</td><td>Phishing basics, Coding (Scratch), Teamwork</td></tr>
+                            <tr><td>June</td><td>Excellence</td><td>Showcase: My Digital Growth</td><td>Reflect, Present, Best work to God</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 4th Grade Slide -->
+                <div class="carousel-slide">
+                    <h4>4th Grade: Year-at-a-Glance</h4>
+                    <table class="clja-table">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>Stone</th>
+                                <th>Project/Unit</th>
+                                <th>Skills & Focus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Sep</td><td>Consistency</td><td>Chromebook & Web Bootcamp</td><td>Logins, Docs, Bookmarks, Password routines</td></tr>
+                            <tr><td>Oct</td><td>Order</td><td>HTML: My First Web Page</td><td>HTML basics, Code structure, Safe posting</td></tr>
+                            <tr><td>Nov</td><td>Vision</td><td>Online Research Quest</td><td>Safe search, Evaluating info, Cite sources</td></tr>
+                            <tr><td>Dec</td><td>Work</td><td>Team Website (Google Sites)</td><td>Collaboration, Roles, Teamwork</td></tr>
+                            <tr><td>Jan</td><td>Excellence</td><td>Polish & Present</td><td>Slides, Images, Peer feedback, “Shine your light”</td></tr>
+                            <tr><td>Feb</td><td>Consistency</td><td>Cyber Hygiene Tracker</td><td>Google Sheets, Safety logs, Review</td></tr>
+                            <tr><td>Mar</td><td>Order</td><td>Coding with Python: Logic Games</td><td>Trinket.io, Print/input, Code order</td></tr>
+                            <tr><td>Apr</td><td>Vision</td><td>“What’s Next in Tech?” Report</td><td>Research, Future trends, God’s vision</td></tr>
+                            <tr><td>May</td><td>Work</td><td>Be a Cyber Guardian PSA</td><td>Slides or video, Teach others, Service</td></tr>
+                            <tr><td>June</td><td>Excellence</td><td>Capstone: Best Project Showcase</td><td>Present, Reflect, Glorify God</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 5th Grade Slide -->
+                <div class="carousel-slide">
+                    <h4>5th Grade: Year-at-a-Glance</h4>
+                    <table class="clja-table">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>Stone</th>
+                                <th>Project/Unit</th>
+                                <th>Skills & Focus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Sep</td><td>Consistency</td><td>Digital Citizenship Mastery</td><td>Password strength, Browser safety, Netiquette</td></tr>
+                            <tr><td>Oct</td><td>Order</td><td>Class Website (HTML/CSS)</td><td>Tags, Styles, Link pages, Teamwork</td></tr>
+                            <tr><td>Nov</td><td>Vision</td><td>Solve a Problem App Plan</td><td>Brainstorm, Research, Peer feedback</td></tr>
+                            <tr><td>Dec</td><td>Work</td><td>Python Coding Projects</td><td>Print, Input, Loops, Debug, Mini-apps</td></tr>
+                            <tr><td>Jan</td><td>Excellence</td><td>Publish My Portfolio</td><td>Google Sites/Web, Showcase best work</td></tr>
+                            <tr><td>Feb</td><td>Consistency</td><td>Teach a Safety Lesson</td><td>Slides, Video, Peer teaching</td></tr>
+                            <tr><td>Mar</td><td>Order</td><td>Group Hackathon</td><td>Web/code, Team roles, Debug, Present</td></tr>
+                            <tr><td>Apr</td><td>Vision</td><td>Tech & Faith Presentation</td><td>Research, Presentation, Faith integration</td></tr>
+                            <tr><td>May</td><td>Work</td><td>Capstone: Choice Project</td><td>Code/web/teach, Peer review, Revise</td></tr>
+                            <tr><td>June</td><td>Excellence</td><td>Graduation Showcase</td><td>Present, Reflect, Community event</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <button class="carousel-btn next" aria-label="Next">&#8594;</button>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact-admin">
+        <h2>Contact Me</h2>
+        <p class="contact-hint">
+            <em>
+                Use this form to send ideas, questions, or comments about the City Lights Junior Tech Academy. Your message will be emailed directly to me and I'll respond ASAP.
+            </em>
+        </p>
+        <form action="https://formspree.io/f/mblkzvgk" method="POST" class="admin-contact-form" autocomplete="off">
+            <label for="admin-name">Your Name</label>
+            <input type="text" id="admin-name" name="name" required placeholder="Enter your name">
+
+            <label for="admin-email">Your Email</label>
+            <input type="email" id="admin-email" name="email" required placeholder="Enter your email address">
+
+            <label for="admin-message">Message</label>
+            <textarea id="admin-message" name="message" rows="5" required placeholder="Type your question or comment"></textarea>
+            
+            <!-- Honeypot anti-spam field (hidden from humans) -->
+            <input type="text" name="_gotcha" style="display:none">
+
+            <button type="submit" class="cta-btn">Send Message</button>
+        </form>
+        <div class="form-note">
+            <small>I’ll respond as soon as possible. Your information stays private.</small>
+        </div>
+    </section>
+</div>
+<!-- Carousel Script (no DOMContentLoaded for CodePen compatibility) -->
+<script>
+const slides = document.querySelectorAll('.carousel-slide');
+const prevBtn = document.querySelector('.carousel-btn.prev');
+const nextBtn = document.querySelector('.carousel-btn.next');
+let current = 0;
+function showSlide(index) {
+    slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+    });
+}
+prevBtn.addEventListener('click', function() {
+    current = (current - 1 + slides.length) % slides.length;
+    showSlide(current);
+});
+nextBtn.addEventListener('click', function() {
+    current = (current + 1) % slides.length;
+    showSlide(current);
+});
+</script>
+</body>
+</html>
