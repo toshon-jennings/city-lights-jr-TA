@@ -1,869 +1,374 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>City Lights Jr. Tech Academy</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Favicon - using your City Lights logo -->
-    <link rel="icon" type="image/png" href="city-lights-logo.png">>
-    <!-- Google Fonts: Roboto & Montserrat -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:600,700&display=swap" rel="stylesheet">
-    <style>
-    body {
-        font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
-        color: #181818;
-        background: #fafbfc;
-        line-height: 1.6;
-        margin: 0;
-        padding: 0;
-    }
-    
-    /* HEADER STYLES */
-    .clja-header {
-        background: linear-gradient(135deg, #2851a3 0%, #1c3d7a 100%);
-        color: #fff;
-        padding: 24px 0;
-        box-shadow: 0 2px 20px rgba(40,81,163,0.15);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .clja-header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><linearGradient id="shine" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:%23ffffff;stop-opacity:0"/><stop offset="50%" style="stop-color:%23ffffff;stop-opacity:0.1"/><stop offset="100%" style="stop-color:%23ffffff;stop-opacity:0"/></linearGradient></defs><rect width="100" height="20" fill="url(%23shine)"/></svg>') repeat-x;
-        animation: shimmer 3s ease-in-out infinite;
-    }
-    
-    @keyframes shimmer {
-        0%, 100% { transform: translateX(-100%); }
-        50% { transform: translateX(100%); }
-    }
-    
-    .header-container {
-        max-width: 950px;
-        margin: 0 auto;
-        padding: 0 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        z-index: 1;
-    }
-    
-    .logo-container {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-    }
-    
-    .logo-image {
-        width: 64px;
-        height: 64px;
-        background: #fff;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-        border: 2px solid rgba(255,183,0,0.3);
-        transition: transform 0.2s ease;
-        font-size: 2rem;
-    }
-    
-    .logo-image:hover {
-        transform: scale(1.05);
-    }
-    
-    .header-text {
-        text-align: center;
-    }
-    
-    .header-title {
-        font-family: 'Montserrat', Arial, sans-serif;
-        font-weight: 700;
-        font-size: 2rem;
-        margin: 0;
-        letter-spacing: 0.5px;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .header-subtitle {
-        font-family: 'Roboto', Arial, sans-serif;
-        font-size: 1rem;
-        margin: 4px 0 0 0;
-        opacity: 0.9;
-        font-weight: 400;
-        letter-spacing: 0.2px;
-    }
-    
-    /* MAIN CONTENT STYLES */
-    .container {
-        max-width: 950px;
-        margin: 0 auto;
-        padding: 32px 16px;
-    }
-    .clja-carousel-section {
-        background: #fff;
-        border-radius: 20px;
-        box-shadow: 0 2px 18px rgba(40,81,163,0.09);
-        margin: 48px auto 32px auto;
-        padding: 46px 18px 38px 18px;
-    }
-    .clja-intro h2 {
-        color: #102654;
-        font-family: 'Montserrat', Arial, sans-serif;
-        font-weight: 700;
-        font-size: 2.4rem;
-        margin-bottom: 10px;
-        letter-spacing: 0.4px;
-    }
-    .clja-intro p {
-        font-size: 1.18rem;
-        margin-bottom: 22px;
-        font-family: 'Roboto', Arial, sans-serif;
-        font-weight: 400;
-        line-height: 1.72;
-    }
-    .clja-stones-blurb {
-        background: #f9fafb;
-        border-left: 6px solid #2851a3;
-        padding: 0 30px;
-        border-radius: 14px;
-        margin-bottom: 34px;
-        margin-top: 0;
-        overflow: hidden;
-        transition: max-height 0.24s cubic-bezier(.77,0,.18,1), padding 0.16s;
-        max-height: 70px;
-    }
-    .stones-toggle {
-        width: 100%;
-        background: none;
-        border: none;
-        outline: none;
-        color: #2851a3;
-        font-family: 'Montserrat', Arial, sans-serif;
-        font-size: 1.25rem;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        text-align: left;
-        padding: 22px 0 22px 0;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        transition: background 0.17s;
-        user-select: none;
-    }
-    .stones-toggle .stone-chevron {
-        margin-left: 12px;
-        font-size: 1.29rem;
-        color: #ffb700;
-        transition: transform 0.22s;
-    }
-    .stones-toggle[aria-expanded="true"] .stone-chevron {
-        transform: rotate(90deg);
-    }
-    .stones-content {
-        opacity: 0;
-        max-height: 0;
-        transition: opacity 0.21s, max-height 0.25s cubic-bezier(.77,0,.18,1), padding 0.2s;
-        padding: 0;
-        pointer-events: none;
-    }
-    .clja-stones-blurb.open {
-        padding: 22px 30px 18px 30px;
-        max-height: 500px;
-    }
-    .clja-stones-blurb.open .stones-content {
-        opacity: 1;
-        max-height: 500px;
-        padding-top: 4px;
-        pointer-events: auto;
-    }
-    .stones-content p {
-        margin: 0 0 10px 0;
-        font-size: 0.96rem;
-        color: #345;
-        font-family: 'Roboto', Arial, sans-serif;
-    }
-    .stones-content ul {
-        margin-left: 1em;
-        padding-left: 0.5em;
-        margin-bottom: 0;
-    }
-    .stones-content li {
-        margin-bottom: 10px;
-        font-size: 1.07rem;
-        font-family: 'Roboto', Arial, sans-serif;
-        font-weight: 500;
-    }
-    .stones-content strong {
-        color: #102654;
-        font-family: 'Montserrat', Arial, sans-serif;
-        font-weight: 600;
-    }
-    /* Other site styles (unchanged) ... */
-    .clja-carousel-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0;
-        margin-top: 10px;
-        position: relative;
-    }
-    .clja-carousel {
-        position: relative;
-        width: 100%;
-        max-width: 820px;
-        min-height: 340px;
-        background: #f3f6fb;
-        border-radius: 20px;
-        box-shadow: 0 2px 12px rgba(40,81,163,0.06);
-        overflow: hidden;
-        padding: 32px 24px 24px 24px;
-        transition: box-shadow 0.22s;
-    }
-    .carousel-slide {
-        display: none;
-        flex-direction: column;
-        align-items: flex-start;
-        animation: fadeIn 0.6s;
-    }
-    .carousel-slide.active {
-        display: flex;
-    }
-    .carousel-slide h4 {
-        font-size: 1.4rem;
-        color: #2851a3;
-        font-family: 'Montserrat', Arial, sans-serif;
-        font-weight: 600;
-        margin-bottom: 18px;
-        letter-spacing: 0.4px;
-    }
-    .clja-table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        background: #fff;
-        border-radius: 14px;
-        overflow: hidden;
-        margin-bottom: 0;
-        box-shadow: 0 1px 10px rgba(40,81,163,0.07);
-        font-size: 1.05rem;
-    }
-    .clja-table th,
-    .clja-table td {
-        padding: 12px 10px;
-        text-align: left;
-    }
-    .clja-table th {
-        background: #2851a3;
-        color: #fff;
-        font-family: 'Montserrat', Arial, sans-serif;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        font-size: 1.02rem;
-        border-bottom: 2px solid #ffb700;
-    }
-    .clja-table td {
-        font-family: 'Roboto', Arial, sans-serif;
-        font-size: 1.01rem;
-        font-weight: 500;
-        border-bottom: 1px solid #e6e6e6;
-        background: #fff;
-        transition: background 0.18s;
-    }
-    .clja-table tr:hover td {
-        background: #f9f5ee;
-    }
-    .clja-table tr:last-child td {
-        border-bottom: none;
-    }
-    .clja-table td:nth-child(2),
-    .clja-table th:nth-child(2) {
-        font-weight: 700;
-        color: #2851a3;
-        font-family: 'Montserrat', Arial, sans-serif;
-        letter-spacing: 0.15px;
-    }
-    .clja-table td:nth-child(3) {
-        font-weight: 600;
-        color: #ffb700;
-    }
-    .carousel-btn {
-        background: #ffb700;
-        border: none;
-        border-radius: 50%;
-        width: 44px;
-        height: 44px;
-        color: #102654;
-        font-size: 1.55rem;
-        font-weight: 700;
-        cursor: pointer;
-        margin: 0 18px;
-        box-shadow: 0 2px 8px rgba(255,183,0,0.09);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.16s, color 0.16s, transform 0.13s;
-        outline: none;
-    }
-    .carousel-btn:focus, .carousel-btn:hover {
-        background: #2851a3;
-        color: #fff;
-        transform: scale(1.1);
-    }
-    
-    .contact-admin {
-        background: #fff;
-        border-radius: 18px;
-        box-shadow: 0 1px 10px rgba(16,38,84,0.09);
-        margin: 52px 0 32px 0;
-        padding: 36px 18px 28px 18px;
-        text-align: center;
-    }
-    .contact-admin h2 {
-        color: #2851a3;
-        font-family: 'Montserrat', Arial, sans-serif;
-        font-weight: 700;
-        margin-bottom: 12px;
-        font-size: 1.4rem;
-        letter-spacing: 0.1px;
-        text-align: left;
-        max-width: 440px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .contact-hint {
-        margin-bottom: 22px;
-        font-size: 1.05rem;
-        color: #888;
-        max-width: 530px;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: left;
-    }
-    .admin-contact-form {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-        max-width: 440px;
-        margin: 0 auto;
-        text-align: left;
-    }
-    .admin-contact-form label {
-        font-weight: 600;
-        color: #102654;
-        margin-top: 6px;
-        margin-bottom: 2px;
-        font-family: 'Montserrat', Arial, sans-serif;
-    }
-    .admin-contact-form input,
-    .admin-contact-form textarea {
-        padding: 11px 12px;
-        border: 1px solid #bbb;
-        border-radius: 7px;
-        font-size: 1.05rem;
-        font-family: 'Roboto', Arial, sans-serif;
-        margin-bottom: 6px;
-        background: #f7f8fa;
-        transition: border 0.18s;
-    }
-    .admin-contact-form input:focus,
-    .admin-contact-form textarea:focus {
-        border-color: #2851a3;
-        outline: none;
-    }
-    .admin-contact-form textarea {
-        min-height: 112px;
-        resize: vertical;
-    }
-    .form-note {
-        margin-top: 16px;
-        text-align: center;
-        color: #888;
-        font-size: 0.99rem;
-        padding-left: 0;
-        max-width: 440px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .cta-btn {
-        display: inline-block;
-        background: #ffb700;
-        color: #1c2130;
-        font-size: 1.09rem;
-        font-weight: 600;
-        padding: 12px 28px;
-        border-radius: 32px;
-        text-decoration: none;
-        border: none;
-        cursor: pointer;
-        transition: background 0.22s, color 0.22s;
-        box-shadow: 0 2px 12px rgba(40,81,163,0.06);
-        margin-top: 10px;
-        margin-bottom: 4px;
-    }
-    .cta-btn:hover, .cta-btn:focus {
-        background: #ffa600;
-        color: #102654;
-    }
-    
-    /* FOOTER STYLES */
-    .clja-footer {
-        background: #102654;
-        color: #fff;
-        padding: 40px 0 24px 0;
-        margin-top: 60px;
-        position: relative;
-    }
-    
-    .clja-footer::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #ffb700 0%, #ffa600 50%, #ffb700 100%);
-    }
-    
-    .footer-container {
-        max-width: 950px;
-        margin: 0 auto;
-        padding: 0 16px;
-        text-align: center;
-    }
-    
-    .footer-stones {
-        display: flex;
-        justify-content: center;
-        gap: 24px;
-        margin-bottom: 32px;
-        flex-wrap: wrap;
-    }
-    
-    .footer-stone {
-        background: rgba(255,183,0,0.1);
-        border: 1px solid rgba(255,183,0,0.3);
-        border-radius: 20px;
-        padding: 12px 16px;
-        font-family: 'Montserrat', Arial, sans-serif;
-        font-weight: 600;
-        font-size: 0.9rem;
-        color: #ffb700;
-        letter-spacing: 0.3px;
-        transition: all 0.2s ease;
-    }
-    
-    .footer-stone:hover {
-        background: rgba(255,183,0,0.2);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(255,183,0,0.2);
-    }
-    
-    .footer-quote {
-        font-style: italic;
-        font-size: 1rem;
-        margin-bottom: 24px;
-        opacity: 0.9;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-        line-height: 1.7;
-    }
-    
-    .footer-verse {
-        font-size: 0.85rem;
-        color: #ffb700;
-        font-family: 'Montserrat', Arial, sans-serif;
-        font-weight: 500;
-        margin-bottom: 32px;
-        letter-spacing: 0.2px;
-    }
-    
-    .footer-info {
-        border-top: 1px solid rgba(255,255,255,0.1);
-        padding-top: 20px;
-        font-size: 0.9rem;
-        opacity: 0.8;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 16px;
-    }
-    
-    .footer-copyright {
-        font-family: 'Roboto', Arial, sans-serif;
-    }
-    
-    .footer-tagline {
-        font-family: 'Montserrat', Arial, sans-serif;
-        font-weight: 500;
-        color: #ffb700;
-        font-size: 0.85rem;
-    }
-    
-    @media (max-width: 900px) {
-        .clja-carousel-section {
-            padding: 20px 3vw;
-        }
-        .clja-carousel {
-            padding: 18px 2vw 18px 2vw;
-            min-height: 260px;
-        }
-        .clja-table th, .clja-table td {
-            font-size: 0.98rem;
-            padding: 8px 5px;
-        }
-    }
-    
-    /* RESPONSIVE STYLES */
-    @media (max-width: 768px) {
-        .clja-header {
-            padding: 16px 0;
-        }
-        
-        .header-container {
-            flex-direction: column;
-            text-align: center;
-            gap: 12px;
-        }
-        
-        .logo-container {
-            flex-direction: column;
-            gap: 8px;
-        }
-        
-        .logo-image {
-            width: 48px;
-            height: 48px;
-            font-size: 1.5rem;
-        }
-        
-        .header-title {
-            font-size: 1.5rem;
-        }
-        
-        .header-subtitle {
-            font-size: 0.9rem;
-        }
-        
-        .footer-stones {
-            gap: 12px;
-        }
-        
-        .footer-stone {
-            font-size: 0.8rem;
-            padding: 8px 12px;
-        }
-        
-        .footer-info {
-            flex-direction: column;
-            text-align: center;
-            gap: 8px;
-        }
-    }
-    
-    @media (max-width: 700px) {
-        .container {
-            padding: 16px 5vw;
-        }
-        .clja-carousel-section {
-            padding: 8px 0;
-        }
-        .clja-intro h2 {
-            font-size: 1.2rem;
-        }
-        .clja-carousel {
-            padding: 8px 2vw 8px 2vw;
-            min-height: 130px;
-        }
-        .carousel-btn {
-            width: 32px;
-            height: 32px;
-            font-size: 1.08rem;
-            margin: 0 6px;
-        }
-        .clja-table th, .clja-table td {
-            font-size: 0.92rem;
-            padding: 6px 2px;
-        }
-        .carousel-slide h4 {
-            font-size: 1rem;
-        }
-        .clja-stones-blurb {
-            padding: 0 12px;
-        }
-        .clja-stones-blurb.open {
-            padding: 15px 12px 14px 12px;
-        }
-        
-        .admin-contact-form {
-            max-width: 100%;
-        }
-        .contact-admin {
-            margin: 28px 0 18px 0;
-            padding: 18px 0 16px 0;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .header-title {
-            font-size: 1.3rem;
-        }
-        
-        .footer-stones {
-            gap: 8px;
-        }
-        
-        .logo-image {
-            width: 40px;
-            height: 40px;
-            font-size: 1.2rem;
-        }
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px);}
-        to { opacity: 1; transform: none;}
-    }
-    </style>
+  <meta charset="UTF-8" />
+  <title>City Lights Jr. Tech Academy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="city-lights-logo.png" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:600,700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== THEME (dark, unified) ===== */
+    :root{
+      --brand-blue:#2851a3; --brand-blue-dark:#1c3d7a;
+      --accent-1:#7c5cff; --accent-2:#00e5a8;
+      --bg:#0b0f1a; --panel:#11162a; --ink:#e9eefb; --ink-dim:#b9c3e6; --line:#1c2546;
+      --radius:16px; --shadow:0 8px 24px rgba(0,0,0,.35);
+      --gold:#ffb700; --gold-dark:#ffa600;
+      --container:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family:Roboto, system-ui, -apple-system, "Segoe UI", Arial, sans-serif; line-height:1.6;
+    }
+    a{color:inherit; text-decoration:none}
+
+    /* ===== HEADER (with shimmer animation restored) ===== */
+    .clja-header{
+      position:relative;
+      background:linear-gradient(135deg,var(--brand-blue) 0%, var(--brand-blue-dark) 100%);
+      color:#fff; padding:24px 0; box-shadow:0 2px 20px rgba(40,81,163,.25);
+      overflow:hidden;
+    }
+    .clja-header::before{
+      content:'';
+      position:absolute; inset:0;
+      background:
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><linearGradient id="shine" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:%23ffffff;stop-opacity:0"/><stop offset="50%" style="stop-color:%23ffffff;stop-opacity:0.12"/><stop offset="100%" style="stop-color:%23ffffff;stop-opacity:0"/></linearGradient></defs><rect width="100" height="20" fill="url(%23shine)"/></svg>')
+        repeat-x;
+      animation: shimmer 3s ease-in-out infinite;
+      opacity:.7;
+      pointer-events:none;
+    }
+    @keyframes shimmer{ 0%,100%{ transform:translateX(-100%) } 50%{ transform:translateX(100%) } }
+    @media (prefers-reduced-motion: reduce){
+      .clja-header::before{ animation:none }
+    }
+
+    .header-container{max-width:var(--container); margin:0 auto; padding:0 16px; display:flex; align-items:center; justify-content:center}
+    .logo-container{display:flex; align-items:center; gap:16px}
+    .logo-image{width:64px;height:64px;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,.25)}
+    .header-text{text-align:center}
+    .header-title{font-family:Montserrat, Arial, sans-serif; font-weight:700; font-size:2rem; margin:0}
+    .header-subtitle{font-size:1rem; margin:4px 0 0; opacity:.95}
+
+    .container{max-width:var(--container); margin:0 auto; padding:32px 16px}
+
+    /* ===== MODERN SECTION (cljr-) ===== */
+    .cljr-shell{position:relative;background:var(--bg);color:var(--ink);border-radius:22px;overflow:hidden;isolation:isolate;box-shadow:0 10px 24px rgba(12,16,34,.25)}
+    .cljr-bg{position:absolute; inset:-20% -10% -10% -10%; z-index:-1; filter:blur(40px); opacity:.6}
+    .cljr-bg span{position:absolute;width:46vmin;height:46vmin;border-radius:50%;
+      background:radial-gradient(ellipse at center, rgba(124,92,255,.32), transparent 60%);
+      animation:floaty 22s ease-in-out infinite}
+    .cljr-bg span:nth-child(2){left:65%; top:10%; background:radial-gradient(ellipse, rgba(0,229,168,.28), transparent 60%); animation-duration:26s}
+    .cljr-bg span:nth-child(3){left:20%; top:60%; background:radial-gradient(ellipse, rgba(124,92,255,.22), transparent 60%); animation-duration:30s}
+    @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-24px)}}
+    @media (prefers-reduced-motion: reduce){ .cljr-bg span{ animation:none } }
+
+    .cljr-hero{padding:48px 24px 12px; max-width:var(--container); margin:0 auto}
+    .cljr-title{font:800 clamp(28px,5vw,54px)/1.05 Montserrat, ui-sans-serif; margin:0 0 8px; color:var(--brand-blue)}
+    .cljr-title .cljr-gradient{background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .cljr-tagline{color:var(--ink-dim); margin:0 0 16px}
+    .cljr-badges{display:flex; flex-wrap:wrap; gap:8px}
+    .cljr-badge{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); padding:6px 10px; border-radius:999px; font-size:13px; backdrop-filter:blur(6px)}
+
+    .cljr-section{padding:24px; max-width:var(--container); margin:0 auto}
+    .cljr-h2{font:700 clamp(20px,3vw,28px)/1.2 Montserrat, ui-sans-serif; margin:0 0 12px; color:var(--ink)}
+
+    /* Cards / panels */
+    .cljr-cards{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .cljr-card{background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid var(--line); border-radius:var(--radius); padding:16px; box-shadow:var(--shadow)}
+    .cljr-list{margin:0; padding-left:18px}
+    .cljr-list li{margin:6px 0}
+
+    /* A/B toggle */
+    .cljr-toggle{position:relative; display:inline-flex; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:999px; margin-top:14px; padding:4px}
+    .cljr-pill{position:relative; z-index:1; border:0; background:transparent; color:var(--ink); padding:8px 16px; border-radius:999px; cursor:pointer; font:600 14px/1 Montserrat, ui-sans-serif}
+    .cljr-pill--active{color:#000}
+    .cljr-pill-indicator{position:absolute; inset:4px 50% 4px 4px; background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); border-radius:999px; transition:inset 320ms cubic-bezier(.2,.8,.2,1)}
+    .cljr-week-msg{color:var(--ink-dim); margin-top:8px}
+
+    /* Timeline */
+    .cljr-timeline{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; margin-top:8px}
+    .cljr-month{background:var(--panel); border:1px dashed var(--line); border-radius:12px; padding:12px; min-height:86px; display:flex; flex-direction:column; justify-content:center; align-items:center}
+    .cljr-month span{font-weight:800; letter-spacing:.04em}
+    .cljr-month em{color:var(--ink-dim); font-style:normal; font-size:13px; text-align:center; margin-top:6px}
+    .cljr-month--accent{border-style:solid; border-color:transparent; background:
+      linear-gradient(var(--panel),var(--panel)) padding-box,
+      linear-gradient(90deg,var(--accent-1),var(--accent-2)) border-box}
+
+    /* Tracks */
+    .cljr-grid{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .cljr-tags{display:flex; gap:8px; margin-top:10px; flex-wrap:wrap}
+    .cljr-tags span{font-size:12px; background:rgba(0,0,0,.15); padding:4px 8px; border-radius:999px; border:1px solid var(--line); color:var(--ink)}
+
+    /* Animate in */
+    [data-animate]{opacity:0; transform:translateY(14px) scale(.98); transition:transform .6s cubic-bezier(.2,.8,.2,1), opacity .6s}
+    [data-animate].is-in{opacity:1; transform:none}
+
+    @media (max-width:720px){ .cljr-timeline{grid-template-columns:repeat(2,minmax(0,1fr))} }
+
+    /* ===== CONTACT (dark, polished, matching) ===== */
+    .contact-admin{ background:var(--panel); color:var(--ink); border:1px solid var(--line);
+      border-radius:18px; box-shadow:var(--shadow); margin:52px 0 32px; padding:28px 18px }
+    .contact-admin h2{ color:var(--ink); font-family:Montserrat, Arial, sans-serif; font-weight:700; margin:0 0 8px; font-size:1.6rem; letter-spacing:.1px }
+    .contact-hint{ margin:0 0 18px; font-size:1.02rem; color:var(--ink-dim); max-width:720px }
+    .admin-contact-form{ display:grid; grid-template-columns:1fr 1fr; gap:14px 16px; max-width:720px }
+    .admin-contact-form .wide{ grid-column:1/-1 }
+    .admin-contact-form label{ font-weight:600; color:var(--ink); margin-bottom:6px; font-family:Montserrat, Arial, sans-serif; font-size:.95rem; display:inline-block }
+    .admin-contact-form input, .admin-contact-form textarea{
+      width:100%; padding:11px 12px; border:1px solid var(--line); border-radius:8px; font-size:1.02rem;
+      font-family:Roboto, Arial, sans-serif; background:#0f1430; color:var(--ink); transition:border .18s, box-shadow .18s, background .18s
+    }
+    .admin-contact-form input::placeholder, .admin-contact-form textarea::placeholder{ color:#9aa3c3 }
+    .admin-contact-form input:focus, .admin-contact-form textarea:focus{
+      border-color:var(--brand-blue); outline:none; background:#0d1230; box-shadow:0 0 0 3px rgba(40,81,163,.25)
+    }
+    .admin-contact-form textarea{ min-height:140px; resize:vertical }
+    .cta-btn{
+      display:inline-block; background:var(--gold); color:#1c2130; font-size:1.05rem; font-weight:700;
+      padding:12px 26px; border-radius:999px; border:none; cursor:pointer;
+      transition:background .22s, transform .12s; box-shadow:0 6px 18px rgba(255,183,0,.25)
+    }
+    .cta-btn:hover,.cta-btn:focus{ background:var(--gold-dark); transform:translateY(-1px) }
+    .form-note{ margin-top:12px; color:var(--ink-dim); font-size:.95rem }
+    @media (max-width:720px){ .admin-contact-form{ grid-template-columns:1fr } }
+
+    /* ===== FOOTER (dark, cohesive) ===== */
+    .clja-footer{ background:#0d1a38; color:#fff; padding:40px 0 24px; margin-top:60px; position:relative }
+    .clja-footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px;
+      background:linear-gradient(90deg, var(--gold) 0%, var(--gold-dark) 50%, var(--gold) 100%) }
+    .footer-container{ max-width:var(--container); margin:0 auto; padding:0 16px; text-align:center }
+    .footer-stones{ display:flex; justify-content:center; gap:24px; margin-bottom:28px; flex-wrap:wrap }
+    .footer-stone{ background:rgba(255,183,0,.1); border:1px solid rgba(255,183,0,.3); border-radius:20px; padding:10px 14px;
+      font-family:Montserrat, Arial, sans-serif; font-weight:600; font-size:.9rem; color:var(--gold); letter-spacing:.3px; transition:.2s }
+    .footer-stone:hover{ background:rgba(255,183,0,.2); transform:translateY(-2px); box-shadow:0 4px 12px rgba(255,183,0,.2) }
+    .footer-quote{ font-style:italic; font-size:1rem; margin-bottom:18px; opacity:.9; max-width:700px; margin-left:auto; margin-right:auto; line-height:1.7 }
+    .footer-verse{ font-size:.95rem; color:var(--gold); font-family:Montserrat, Arial, sans-serif; font-weight:700; margin-bottom:24px; letter-spacing:.2px }
+    .footer-info{ border-top:1px solid rgba(255,255,255,.12); padding-top:16px; font-size:.95rem; opacity:.9; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px }
+    .footer-tagline{ font-family:Montserrat, Arial, sans-serif; font-weight:700; color:var(--gold); font-size:.95rem }
+    @media (max-width:768px){ .footer-info{ flex-direction:column; text-align:center; gap:8px } }
+  </style>
 </head>
 <body>
-    <!-- HEADER -->
-    <header class="clja-header">
-        <div class="header-container">
-            <div class="logo-container">
-                <div class="logo-image">
-                    <img src="city-lights-logo.png" alt="City Lights Junior Tech Academy Logo" style="width: 56px; height: 56px; border-radius: 8px;">
-                </div>
-                <div class="header-text">
-                    <h1 class="header-title">City Lights Junior Tech Academy</h1>
-                    <p class="header-subtitle">Educating and Empowering Young Digital Citizens</p>
-                </div>
-            </div>
+  <!-- HEADER -->
+  <header class="clja-header">
+    <div class="header-container">
+      <div class="logo-container">
+        <div class="logo-image">
+          <img src="city-lights-logo.png" alt="City Lights Jr. Logo" style="width:56px;height:56px;border-radius:8px" />
         </div>
-    </header>
-
-    <div class="container">
-        <!-- CAROUSEL + OVERVIEW SECTION -->
-        <section class="clja-carousel-section">
-            <div class="clja-intro">
-                <p>
-                    <strong>City Lights Junior Tech Academy</strong> empowers grades 3–5 with real-world digital skills, a security-first mindset, and a Biblical worldview. 
-                  <p>Students grow from digital novices into tech creators and cyber-citizens, through hands-on coding, website building, and cybersecurity projects—all on Chromebook-friendly platforms.</p>
-                   <p>At every step, we're integrating our "5 Smooth Stones", helping every student develop habits of <strong>Consistency</strong>, <strong>Order</strong>, <strong>Vision</strong>, <strong>Work</strong>, and <strong>Excellence</strong> as they learn to shine online.</p>
-                </p>
-              <hr>
-                <div class="clja-stones-blurb" id="stones-blurb">
-                    <button class="stones-toggle" aria-expanded="false" id="stones-toggle-btn">
-                        Guiding Principles: Our 5 Smooth Stones
-                        <span class="stone-chevron">&#9654;</span>
-                    </button>
-                    <div class="stones-content" id="stones-content">
-                      <p>
-                        <code><small>Then David took his staff in his hand; and he chose for himself five smooth stones from the brook, and put them in a shepherd's bag, in a pouch which he had, and his sling was in his hand. And he drew near to Goliath. <em>-1 Samuel 17:40</em></small></code>
-                      </p>
-                      <ul>
-                          <li><strong>Consistency:</strong> Safe and wise habits—practiced daily, in tech and life.</li>
-                          <li><strong>Order:</strong> Working with clarity, organization, and care.</li>
-                          <li><strong>Vision:</strong> Dreaming big, planning ahead, and seeing possibilities.</li>
-                          <li><strong>Work:</strong> Diligence, persistence, and teamwork in every project.</li>
-                          <li><strong>Excellence:</strong> Always offering our best, to God and others.</li>
-                      </ul>
-                    </div>
-                </div>
-               <hr>
-            </div>
-         
-            <div class="clja-carousel-wrapper">
-                <button class="carousel-btn prev" aria-label="Previous">&#8592;</button>
-                <div class="clja-carousel">
-                    <!-- 3rd Grade Slide -->
-                    <div class="carousel-slide active">
-                        <h4>3rd Grade: Year-at-a-Glance</h4>
-                        <table class="clja-table">
-                            <thead>
-                                <tr>
-                                    <th>Month</th>
-                                    <th>Stone</th>
-                                    <th>Project/Unit</th>
-                                    <th>Skills & Focus</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Sep</td><td>Consistency</td><td>Getting Started with Tech</td><td>Login, Chromebook use, Docs/Slides, Passwords, Safe logins</td></tr>
-                                <tr><td>Oct</td><td>Order</td><td>Organize My Digital World</td><td>Creating/saving docs, folders, file names, Order online</td></tr>
-                                <tr><td>Nov</td><td>Vision</td><td>Dream a Digital Poster</td><td>Google Drawings, Graphics, Safe image use</td></tr>
-                                <tr><td>Dec</td><td>Work</td><td>Team Storybook in Docs</td><td>Typing, Teamwork, Formatting, Sharing</td></tr>
-                                <tr><td>Jan</td><td>Excellence</td><td>Present My Project (Slides)</td><td>Presentation, Speaking, Do your best</td></tr>
-                                <tr><td>Feb</td><td>Consistency</td><td>My Cyber Safety Checklist</td><td>Daily safe habits, Browsing checklists</td></tr>
-                                <tr><td>Mar</td><td>Order</td><td>My First Website (Google Sites)</td><td>Make/edit pages, Images, Safe sharing</td></tr>
-                                <tr><td>Apr</td><td>Vision</td><td>Invent an App Pitch</td><td>Planning, Research, Simple presentation</td></tr>
-                                <tr><td>May</td><td>Work</td><td>Cyber Detectives Game</td><td>Phishing basics, Coding (Scratch), Teamwork</td></tr>
-                                <tr><td>June</td><td>Excellence</td><td>Showcase: My Digital Growth</td><td>Reflect, Present, Best work to God</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- 4th Grade Slide -->
-                    <div class="carousel-slide">
-                        <h4>4th Grade: Year-at-a-Glance</h4>
-                        <table class="clja-table">
-                            <thead>
-                                <tr>
-                                    <th>Month</th>
-                                    <th>Stone</th>
-                                    <th>Project/Unit</th>
-                                    <th>Skills & Focus</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Sep</td><td>Consistency</td><td>Chromebook & Web Bootcamp</td><td>Logins, Docs, Bookmarks, Password routines</td></tr>
-                                <tr><td>Oct</td><td>Order</td><td>HTML: My First Web Page</td><td>HTML basics, Code structure, Safe posting</td></tr>
-                                <tr><td>Nov</td><td>Vision</td><td>Online Research Quest</td><td>Safe search, Evaluating info, Cite sources</td></tr>
-                                <tr><td>Dec</td><td>Work</td><td>Team Website (Google Sites)</td><td>Collaboration, Roles, Teamwork</td></tr>
-                                <tr><td>Jan</td><td>Excellence</td><td>Polish & Present</td><td>Slides, Images, Peer feedback, "Shine your light"</td></tr>
-                                <tr><td>Feb</td><td>Consistency</td><td>Cyber Hygiene Tracker</td><td>Google Sheets, Safety logs, Review</td></tr>
-                                <tr><td>Mar</td><td>Order</td><td>Coding with Python: Logic Games</td><td>Trinket.io, Print/input, Code order</td></tr>
-                                <tr><td>Apr</td><td>Vision</td><td>"What's Next in Tech?" Report</td><td>Research, Future trends, God's vision</td></tr>
-                                <tr><td>May</td><td>Work</td><td>Be a Cyber Guardian PSA</td><td>Slides or video, Teach others, Service</td></tr>
-                                <tr><td>June</td><td>Excellence</td><td>Capstone: Best Project Showcase</td><td>Present, Reflect, Glorify God</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- 5th Grade Slide -->
-                    <div class="carousel-slide">
-                        <h4>5th Grade: Year-at-a-Glance</h4>
-                        <table class="clja-table">
-                            <thead>
-                                <tr>
-                                    <th>Month</th>
-                                    <th>Stone</th>
-                                    <th>Project/Unit</th>
-                                    <th>Skills & Focus</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Sep</td><td>Consistency</td><td>Digital Citizenship Mastery</td><td>Password strength, Browser safety, Netiquette</td></tr>
-                                <tr><td>Oct</td><td>Order</td><td>Class Website (HTML/CSS)</td><td>Tags, Styles, Link pages, Teamwork</td></tr>
-                                <tr><td>Nov</td><td>Vision</td><td>Solve a Problem App Plan</td><td>Brainstorm, Research, Peer feedback</td></tr>
-                                <tr><td>Dec</td><td>Work</td><td>Python Coding Projects</td><td>Print, Input, Loops, Debug, Mini-apps</td></tr>
-                                <tr><td>Jan</td><td>Excellence</td><td>Publish My Portfolio</td><td>Google Sites/Web, Showcase best work</td></tr>
-                                <tr><td>Feb</td><td>Consistency</td><td>Teach a Safety Lesson</td><td>Slides, Video, Peer teaching</td></tr>
-                                <tr><td>Mar</td><td>Order</td><td>Group Hackathon</td><td>Web/code, Team roles, Debug, Present</td></tr>
-                                <tr><td>Apr</td><td>Vision</td><td>Tech & Faith Presentation</td><td>Research, Presentation, Faith integration</td></tr>
-                                <tr><td>May</td><td>Work</td><td>Capstone: Choice Project</td><td>Code/web/teach, Peer review, Revise</td></tr>
-                                <tr><td>June</td><td>Excellence</td><td>Graduation Showcase</td><td>Present, Reflect, Community event</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <button class="carousel-btn next" aria-label="Next">&#8594;</button>
-            </div>
-        </section>
-
-        <!-- CONTACT SECTION -->
-        <section class="contact-admin">
-            <h2>Contact Me</h2>
-            <p class="contact-hint">
-                <em>
-                    Use this form to send ideas, questions, or comments about the City Lights Junior Tech Academy. Your message will be emailed directly to me and I'll respond ASAP.
-                </em>
-            </p>
-            <form action="https://formspree.io/f/mblkzvgk" method="POST" class="admin-contact-form" autocomplete="off">
-                <label for="admin-name">Your Name</label>
-                <input type="text" id="admin-name" name="name" required placeholder="Enter your name">
-
-                <label for="admin-email">Your Email</label>
-                <input type="email" id="admin-email" name="email" required placeholder="Enter your email address">
-
-                <label for="admin-message">Message</label>
-                <textarea id="admin-message" name="message" rows="5" required placeholder="Type your question or comment"></textarea>
-                
-                <!-- Honeypot anti-spam field (hidden from humans) -->
-                <input type="text" name="_gotcha" style="display:none">
-
-                <button type="submit" class="cta-btn">Send Message</button>
-            </form>
-            <div class="form-note">
-                <small>I'll respond as soon as possible. Your information stays private.</small>
-            </div>
-        </section>
+        <div class="header-text">
+          <h1 class="header-title">City Lights Junior Tech Academy</h1>
+          <p class="header-subtitle">Educating and Empowering Young Digital Citizens</p>
+        </div>
+      </div>
     </div>
+  </header>
 
-    <!-- FOOTER -->
-    <footer class="clja-footer">
-        <div class="footer-container">
-            <div class="footer-stones">
-                <div class="footer-stone">Consistency</div>
-                <div class="footer-stone">Order</div>
-                <div class="footer-stone">Vision</div>
-                <div class="footer-stone">Work</div>
-                <div class="footer-stone">Excellence</div>
-            </div>
-            
-            <div class="footer-quote">
-                "Let your light shine before others, that they may see your good deeds and glorify your Father in heaven."
-            </div>
-            
-            <div class="footer-verse">
-                Matthew 5:16
-            </div>
-            
-            <div class="footer-info">
-                <div class="footer-copyright">
-                    © 2025 City Lights Junior Tech Academy
-                </div>
-                <div class="footer-tagline">
-                    Shining Digital Light
-                </div>
-            </div>
+  <div class="container">
+    <!-- MODERN DARK SECTION -->
+    <section class="cljr-shell" id="city-lights-jr">
+      <div class="cljr-bg"><span></span><span></span><span></span></div>
+
+      <header class="cljr-hero">
+        <h1 class="cljr-title">
+          City Lights Jr. <span class="cljr-gradient">Tech Adventures</span>
+        </h1>
+        <p class="cljr-tagline">Grades 3–5 · Fridays · 40 minutes · Alternating half-classes (A/B Week)</p>
+        <div class="cljr-badges">
+          <span class="cljr-badge">Sept–May: Core Skills</span>
+          <span class="cljr-badge">Early June: Summer Project Setup</span>
         </div>
-    </footer>
+      </header>
 
-<!-- Scripts -->
-<script>
-// Carousel
-const slides = document.querySelectorAll('.carousel-slide');
-const prevBtn = document.querySelector('.carousel-btn.prev');
-const nextBtn = document.querySelector('.carousel-btn.next');
-let current = 0;
-function showSlide(index) {
-    slides.forEach((slide, i) => {
-        slide.classList.toggle('active', i === index);
-    });
-}
-prevBtn.addEventListener('click', function() {
-    current = (current - 1 + slides.length) % slides.length;
-    showSlide(current);
-});
-nextBtn.addEventListener('click', function() {
-    current = (current + 1) % slides.length;
-    showSlide(current);
-});
+      <!-- A/B Week -->
+      <section class="cljr-section">
+        <h2 class="cljr-h2">How Fridays Work (A/B Week)</h2>
+        <div class="cljr-cards">
+          <article class="cljr-card" data-animate>
+            <h3>Week A</h3>
+            <ul class="cljr-list">
+              <li>Group A attends (40 min)</li>
+              <li>Group B: short async practice</li>
+              <li>Lesson recap posted here</li>
+            </ul>
+          </article>
+          <article class="cljr-card" data-animate>
+            <h3>Week B</h3>
+            <ul class="cljr-list">
+              <li>Group B attends (40 min)</li>
+              <li>Group A: short async practice</li>
+              <li>Mini-assessment / badge check</li>
+            </ul>
+          </article>
+        </div>
 
-// Stones Section Dropdown
-const stonesBlurb = document.getElementById('stones-blurb');
-const stonesToggleBtn = document.getElementById('stones-toggle-btn');
-const stonesContent = document.getElementById('stones-content');
+        <div class="cljr-toggle" aria-label="A/B Week Toggle">
+          <button class="cljr-pill cljr-pill--active" data-week="A">A-Week</button>
+          <button class="cljr-pill" data-week="B">B-Week</button>
+          <span class="cljr-pill-indicator" aria-hidden="true"></span>
+        </div>
+        <p class="cljr-week-msg" id="cljr-week-msg" aria-live="polite">Viewing: <strong>A-Week</strong> schedule flow.</p>
+      </section>
 
-stonesToggleBtn.addEventListener('click', function() {
-    const expanded = stonesToggleBtn.getAttribute('aria-expanded') === 'true';
-    if (!expanded) {
-        stonesBlurb.classList.add('open');
-        stonesToggleBtn.setAttribute('aria-expanded', 'true');
-    } else {
-        stonesBlurb.classList.remove('open');
-        stonesToggleBtn.setAttribute('aria-expanded', 'false');
-    }
-});
-</script>
+      <!-- Year at a Glance -->
+      <section class="cljr-section">
+        <h2 class="cljr-h2">This Year at a Glance</h2>
+        <div class="cljr-timeline" data-animate>
+          <div class="cljr-month"><span>Sep</span><em>Foundations & Safety</em></div>
+          <div class="cljr-month"><span>Oct</span><em>Typing & Logic</em></div>
+          <div class="cljr-month"><span>Nov</span><em>Algorithms (Unplugged)</em></div>
+          <div class="cljr-month"><span>Dec</span><em>Intro to Coding</em></div>
+          <div class="cljr-month"><span>Jan</span><em>Web Basics</em></div>
+          <div class="cljr-month"><span>Feb</span><em>Data & Vocab</em></div>
+          <div class="cljr-month"><span>Mar</span><em>Creative Tech</em></div>
+          <div class="cljr-month"><span>Apr</span><em>Make & Present</em></div>
+          <div class="cljr-month"><span>May</span><em>Capstone Sprint</em></div>
+          <div class="cljr-month cljr-month--accent"><span>Jun</span><em>Summer Project Setup</em></div>
+        </div>
+      </section>
+
+      <!-- Tracks by Grade -->
+      <section class="cljr-section">
+        <h2 class="cljr-h2">Tracks by Grade</h2>
+        <div class="cljr-grid">
+          <article class="cljr-card" data-animate>
+            <h3>Grade 3</h3>
+            <ul class="cljr-list">
+              <li>Digital Citizenship & Safety</li>
+              <li>Typing accuracy basics</li>
+              <li>Unplugged logic puzzles</li>
+              <li>Scratch Jr.–style coding</li>
+              <li>Make: Mini poster or card</li>
+            </ul>
+            <div class="cljr-tags"><span>Beginner Friendly</span><span>Hands-On</span></div>
+          </article>
+          <article class="cljr-card" data-animate>
+            <h3>Grade 4</h3>
+            <ul class="cljr-list">
+              <li>Logic → simple algorithms</li>
+              <li>Blocks → light JavaScript</li>
+              <li>Web intro: content & style</li>
+              <li>Data vocab (files, folders)</li>
+              <li>Make: Interactive poster</li>
+            </ul>
+            <div class="cljr-tags"><span>Build & Test</span><span>Present</span></div>
+          </article>
+          <article class="cljr-card" data-animate>
+            <h3>Grade 5</h3>
+            <ul class="cljr-list">
+              <li>Projects with purpose</li>
+              <li>Deeper JS or HTML/CSS</li>
+              <li>UX basics & iteration</li>
+              <li>Team roles & stand-ups</li>
+              <li>Make: Capstone micro-site</li>
+            </ul>
+            <div class="cljr-tags"><span>Capstone</span><span>Portfolio</span></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Guiding Principles -->
+      <section class="cljr-section">
+        <h2 class="cljr-h2">Guiding Principles: Our 5 Smooth Stones</h2>
+        <div class="cljr-card" data-animate>
+          <p style="margin:0 0 8px 0;color:var(--ink-dim)">
+            <code><small>Then David took his staff in his hand; and he chose for himself five smooth stones from the brook... <em>- 1 Samuel 17:40</em></small></code>
+          </p>
+          <ul class="cljr-list" style="margin-top:8px">
+            <li><strong>Consistency</strong> — safe & wise habits practiced daily</li>
+            <li><strong>Order</strong> — clarity, organization, and care</li>
+            <li><strong>Vision</strong> — dreaming big, planning ahead</li>
+            <li><strong>Work</strong> — diligence, persistence, teamwork</li>
+            <li><strong>Excellence</strong> — always offering our best</li>
+          </ul>
+        </div>
+      </section>
+    </section>
+    <!-- /MODERN DARK SECTION -->
+
+    <!-- CONTACT (dark, polished, matching) -->
+    <section class="contact-admin" id="contact">
+      <h2>Contact Me</h2>
+      <p class="contact-hint">
+        <em>Use this form to send ideas, questions, or comments about the City Lights Junior Tech Academy.
+        Your message will be emailed directly to me and I’ll respond ASAP.</em>
+      </p>
+      <form action="https://formspree.io/f/mblkzvgk" method="POST" class="admin-contact-form" autocomplete="off">
+        <div class="wide">
+          <label for="admin-name">Your Name</label>
+          <input type="text" id="admin-name" name="name" required placeholder="First and last name" />
+        </div>
+        <div class="wide">
+          <label for="admin-email">Your Email</label>
+          <input type="email" id="admin-email" name="email" required placeholder="name@example.com" />
+        </div>
+        <div class="wide">
+          <label for="admin-message">Message</label>
+          <textarea id="admin-message" name="message" rows="6" required placeholder="How can I help?"></textarea>
+        </div>
+        <!-- Honeypot anti-spam (hidden) -->
+        <input type="text" name="_gotcha" style="display:none" aria-hidden="true" />
+        <div class="wide">
+          <button type="submit" class="cta-btn">Send Message</button>
+          <div class="form-note"><small>Your information stays private. I typically reply within 1–2 school days.</small></div>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="clja-footer">
+    <div class="footer-container">
+      <div class="footer-stones">
+        <div class="footer-stone">Consistency</div>
+        <div class="footer-stone">Order</div>
+        <div class="footer-stone">Vision</div>
+        <div class="footer-stone">Work</div>
+        <div class="footer-stone">Excellence</div>
+      </div>
+      <div class="footer-quote">
+        “Let your light shine before others, that they may see your good deeds and glorify your Father in heaven.”
+      </div>
+      <div class="footer-verse">Matthew 5:16</div>
+      <div class="footer-info">
+        <div>© 2025 City Lights Junior Tech Academy</div>
+        <div class="footer-tagline">Shining Digital Light</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== JS (animations + A/B toggle) ===== -->
+  <script>
+    // Animate in [data-animate]
+    (function(){
+      const els = document.querySelectorAll('[data-animate]');
+      if (!('IntersectionObserver' in window)) { els.forEach(el => el.classList.add('is-in')); return; }
+      const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('is-in'); }); }, {threshold:0.12});
+      els.forEach(el=>io.observe(el));
+    })();
+
+    // A/B Week toggle
+    (function(){
+      const container = document.querySelector('.cljr-toggle');
+      const msg = document.getElementById('cljr-week-msg');
+      if(!container || !msg) return;
+      const pills = container.querySelectorAll('.cljr-pill');
+      const indicator = container.querySelector('.cljr-pill-indicator');
+      function setWeek(week){
+        pills.forEach(p=>p.classList.toggle('cljr-pill--active', p.dataset.week===week));
+        const left = week==='A' ? '4px' : 'calc(50% + 4px)';
+        const right = week==='A' ? 'calc(50% + 4px)' : '4px';
+        indicator.style.inset = `4px ${right} 4px ${left}`;
+        msg.innerHTML = `Viewing: <strong>${week}-Week</strong> schedule flow.`;
+      }
+      pills.forEach(p=>p.addEventListener('click',()=>setWeek(p.dataset.week)));
+      setWeek('A');
+    })();
+  </script>
 </body>
 </html>
